@@ -1,12 +1,18 @@
+#!/usr/bin/python3
+
+import sys
+import argparse
 import subprocess
 import json 
 
 
 test_values = []
 
-def fetch_tests(filename):
+def fetch_tests(filename, verbose=True):
   """Loads the tests input/output pairs from a json file"""
   global test_values
+  if verbose:
+    print (f"Loaded test data from: {filename}")
   with open(filename) as f:
     test_values = json.load(f)['tests']
 
@@ -35,6 +41,7 @@ def assert_output(output, expected, verbose=True):
 
 def run_test(verbose=True):
   """run the test util. Call after the tests have been fetched"""
+  n = 1
   for t in test_values:
     process = subprocess.run(["./print_endian", t['input']], stdout=subprocess.PIPE, universal_newlines=True)
     output = process.stdout
@@ -42,11 +49,29 @@ def run_test(verbose=True):
       print (f"Testing: '{t['input']}', Expected: {t['output']}")
       # print (output)
     if assert_output(output, t['output'], verbose):
-      print ("passed")
+      print (f"{n}/{len(test_values)}: passed")
     else:
-      print ("failed")
+      print (f"{n}/{len(test_values)}: failed")
+    n += 1
 
   
 if __name__ == "__main__":
-  fetch_tests('test_pairs.json')
-  run_test()
+  parser = argparse.ArgumentParser()
+  parser.add_argument('-i', '--infile',
+                      required=False,
+                      type=str,
+                      default="test_pairs.json", 
+                      help="JSON input file that provides the in/out combinations to test" )
+  parser.add_argument('-v', '--verbose',
+                      required=False,
+                      action="store_true",
+                      help="Increase output verbosity")
+  
+  args = parser.parse_args(sys.argv[1:])
+      
+  if (args.infile.split('.')[-1] != 'json'):
+    print ("Only .json files accepted as input!")
+    sys.exit(2)
+
+  fetch_tests(args.infile, verbose=args.verbose)
+  run_test(verbose=args.verbose)
