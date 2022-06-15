@@ -1,0 +1,48 @@
+{
+  "tests": [
+    {
+      "input": " ",
+      "output": "INVALID"
+    },
+    {
+      "input": " 23",
+      "output": "17 00 00 00, 00 00 00 17"
+    },
+    {
+      "input": "23 ",
+      "output": "INVALID"
+    },
+    {
+      "input": "4294967295",
+      "output": "FF FF FF FF, FF FF FF FF"
+    },
+    {
+      "input": "4294967296",
+      "output": "OUT OF RANGE"
+    },
+    {
+      "input": "-1",
+      "output": "OUT OF RANGE"
+    },
+    {
+      "input": "32000000",
+      "output": "00 48 E8 01, 01 E8 48 00"
+    },
+    {
+      "input": "0",
+      "output": "00 00 00 00, 00 00 00 00"
+    },
+    {
+      "input": "123a456",
+      "output": "INVALID"
+    },
+    {
+      "input": "+1234567",
+      "output": "87 D6 12 00, 00 12 D6 87"
+    },
+    {
+      "input": "+123 456",
+      "output": "INVALID"
+    }
+  ]
+}
