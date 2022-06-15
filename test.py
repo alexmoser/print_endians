@@ -5,11 +5,13 @@ import json
 test_values = []
 
 def fetch_tests(filename):
+  """Loads the tests input/output pairs from a json file"""
   global test_values
   with open(filename) as f:
     test_values = json.load(f)['tests']
 
 def parse_output(output):
+  """parse the program output"""
   if 'INVALID' in output:
     return 'INVALID'
   
@@ -22,6 +24,7 @@ def parse_output(output):
   return f'{le}, {be}'
 
 def assert_output(output, expected, verbose=True):
+  """return True if output matches the expected value, False otherwise"""
   parsed_out = parse_output(output)
   if verbose:
     print(f"Got: {parsed_out}")
@@ -31,6 +34,7 @@ def assert_output(output, expected, verbose=True):
     return False
 
 def run_test(verbose=True):
+  """run the test util. Call after the tests have been fetched"""
   for t in test_values:
     process = subprocess.run(["./print_endian", t['input']], stdout=subprocess.PIPE, universal_newlines=True)
     output = process.stdout
