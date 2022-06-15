@@ -1,7 +1,8 @@
 #include "print_endian_utils.h"
 #include <string>
+#include <iostream>
 
-constexpr std::string test[] {
+static const std::string test[] {
     " ",
     " 23",
     "23 ",
@@ -33,7 +34,9 @@ int main(int argc, char **argv) {
     // Parse input
     uint32_t number {};
     eParserResult ret = parse_input(number, t.c_str(), 10);
-    std::cout << "Input: '" << t << "' | return value: " << (int)ret << ", input: " << number << "\n";
+    std::cout << "Input: '" << t << "' | result: ";
+    print_result(ret);
+    std::cout << ", input: " << number << "\n";
     
     // Print endian representations
     if (ret == eParserResult::SUCCESS) {
