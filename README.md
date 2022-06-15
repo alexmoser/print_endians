@@ -23,3 +23,17 @@ Notes:
 - A leading `+` symbol is accepted
 
 ## Usage
+Call the compiled program and pass the number as parameter. 
+
+### Example
+From terminal:
+```sh
+./print_endian 12003400
+```
+
+Will produce the following output:
+```sh
+Input: 12003400
+Little Endian:  48 28 B7 00 
+Big Endian:     00 B7 28 48 
+```

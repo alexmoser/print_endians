@@ -44,7 +44,7 @@ eParserResult parse_input(uint32_t &number, char const *input, int base) {
  * @param number the number to print
  */
 void print_BE(uint32_t number) {
-  printf("Big Endian: ");
+  printf("Big Endian:\t");
   for (int i=3; i>=0; i--) {
     printf("%02X ", (uint8_t) (number >> 8*i));
   }
@@ -57,7 +57,7 @@ void print_BE(uint32_t number) {
  * @param number the number to print
  */
 void print_LE(uint32_t number) {
-  printf("Little Endian: ");
+  printf("Little Endian:\t");
   for (int i=0; i<4; i++) {
     printf("%02X ", (uint8_t) (number >> 8*i));
   }
